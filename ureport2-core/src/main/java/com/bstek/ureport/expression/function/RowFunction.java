@@ -17,8 +17,10 @@ package com.bstek.ureport.expression.function;
 
 import java.util.List;
 
+import com.bstek.ureport.Utils;
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.expression.model.data.ExpressionData;
+import com.bstek.ureport.expression.model.data.ObjectExpressionData;
 import com.bstek.ureport.model.Cell;
 import com.bstek.ureport.model.Row;
 
@@ -29,6 +31,13 @@ import com.bstek.ureport.model.Row;
 public class RowFunction implements Function{
 	@Override
 	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
+		if (dataList.size() == 1) {
+			ObjectExpressionData exprData = (ObjectExpressionData) dataList.get(0);
+			String cellName = (String) exprData.getData();
+			List<Cell> targetCells = Utils.fetchTargetCells(currentCell, context, cellName);
+			Row row = targetCells.get(0).getRow();
+			return row.getRowNumber();
+		}
 		Row row=currentCell.getRow();
 		return row.getRowNumber();
 	}
