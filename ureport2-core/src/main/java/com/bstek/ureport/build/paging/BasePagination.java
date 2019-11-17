@@ -15,9 +15,7 @@
  ******************************************************************************/
 package com.bstek.ureport.build.paging;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.bstek.ureport.build.Context;
 import com.bstek.ureport.definition.HeaderFooterDefinition;
@@ -39,6 +37,18 @@ public abstract class BasePagination {
 			row.setPageIndex(pages.size());
 			lastPageRows.add(row);
 		}
+
+		//修复总结行和重复表尾同时存在时，总结行必放到重复表尾后面的bug，重新排序，使其按定义的顺序渲染
+		Collections.sort(lastPageRows, new Comparator<Row>() {
+			@Override
+			public int compare(Row o1, Row o2) {
+				String rowKey1 = o1.getRowKey();
+				String rowKey2 = o2.getRowKey();
+				Integer rowKeyNum1 = Integer.valueOf(rowKey1.substring(1));
+				Integer rowKeyNum2 = Integer.valueOf(rowKey2.substring(1));
+				return rowKeyNum1.compareTo(rowKeyNum2);
+			}
+		});
 	}
 	protected Page buildPage(List<Row> rows,List<Row> headerRows,List<Row> footerRows,List<Row> titleRows,int pageIndex,Report report){
 		int rowSize=rows.size();
