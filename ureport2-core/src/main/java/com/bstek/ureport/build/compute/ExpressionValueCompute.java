@@ -1,12 +1,12 @@
 /*******************************************************************************
  * Copyright 2017 Bstek
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License.  You may obtain a copy
  * of the License at
- * 
+ *
  *   http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
  * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
@@ -30,6 +30,7 @@ import com.bstek.ureport.expression.model.Expression;
 import com.bstek.ureport.expression.model.data.BindDataListExpressionData;
 import com.bstek.ureport.expression.model.data.ExpressionData;
 import com.bstek.ureport.expression.model.expr.BaseExpression;
+import com.bstek.ureport.expression.model.expr.ExpressionBlock;
 import com.bstek.ureport.expression.model.expr.FunctionExpression;
 import com.bstek.ureport.expression.model.expr.JoinExpression;
 import com.bstek.ureport.expression.model.expr.ifelse.ElseExpression;
@@ -55,7 +56,7 @@ public class ExpressionValueCompute implements ValueCompute {
 				cell.setExistPageFunction(true);
 				context.addExistPageFunctionCells(cell);
 				return list;
-			}			
+			}
 		}
 		ExpressionData<?> data=expr.execute(cell, cell,context);
 		if(data instanceof BindDataListExpressionData){
@@ -70,12 +71,12 @@ public class ExpressionValueCompute implements ValueCompute {
 			}
 		}else{
 			if(obj!=null){
-				list.add(new BindData(obj));							
+				list.add(new BindData(obj));
 			}
 		}
 		return list;
 	}
-	
+
 	private boolean hasPageFunction(Expression expr){
 		if(expr==null){
 			return false;
@@ -154,10 +155,22 @@ public class ExpressionValueCompute implements ValueCompute {
 					return has;
 				}
 			}
+		} else if (expr instanceof ExpressionBlock){
+			ExpressionBlock expressionBlock = (ExpressionBlock)expr;
+			List<Expression> list= expressionBlock.getExpressionList();
+			if(list==null || list.size()==0){
+				return false;
+			}
+			for(Expression expression:list){
+				boolean has=hasPageFunction(expression);
+				if(has){
+					return has;
+				}
+			}
 		}
 		return false;
 	}
-	
+
 	@Override
 	public ValueType type() {
 		return ValueType.expression;

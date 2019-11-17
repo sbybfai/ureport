@@ -293,7 +293,11 @@ public class Context {
 		currentPageRowsMap.put(pageIndex, currentPageRows);
 	}
 	public List<Row> getCurrentPageRows(int pageIndex) {
-		return currentPageRowsMap.get(pageIndex);
+		List<Row> rowList = currentPageRowsMap.get(pageIndex);
+		if(rowList == null){
+			rowList = new ArrayList<>();
+		}
+		return rowList;
 	}
 	
 	public void addExistPageFunctionCells(Cell cell) {
