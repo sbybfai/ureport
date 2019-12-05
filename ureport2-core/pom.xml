@@ -120,24 +120,12 @@
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
-	<developers>
-		<developer>
-			<name>Gaojie</name>
-			<email>jacky.gao@bstek.com</email>
-			<organization>Bstek</organization>
-			<organizationUrl>http://www.bstek.com</organizationUrl>
-		</developer>
-	</developers>
 	<scm>
-		<connection>scm:git:https://github.com/youseries/ureport.git</connection>
-		<developerConnection>scm:git:git@github.com:youseries/ureport.git</developerConnection>
-		<url>https://github.com/youseries/ureport</url>
+		<connection>scm:git:https://github.com/sbybfai/ureport.git</connection>
+		<developerConnection>scm:git:git@github.com:sbybfai/ureport.git</developerConnection>
+		<url>https://github.com/sbybfai/ureport</url>
     <tag>ureport2-core-2.2.4</tag>
   </scm>
-	<organization>
-		<name>Bstek</name>
-		<url>http://www.bstek.com</url>
-	</organization>	
 	<name>UReport2 Core Project</name>
-	<url>https://github.com/youseries/ureport/tree/master/ureport2-core</url>
+	<url>https://github.com/sbybfai/ureport/tree/master/ureport2-core</url>
 </project>

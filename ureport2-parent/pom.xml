@@ -14,23 +14,11 @@
 			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
 		</license>
 	</licenses>
-	<developers>
-		<developer>
-			<name>Gaojie</name>
-			<email>jacky.gao@bstek.com</email>
-			<organization>Bstek</organization>
-			<organizationUrl>http://www.bstek.com</organizationUrl>
-		</developer>
-	</developers>
 	<scm>
-		<connection>https://github.com/youseries/ureport.git</connection>
-		<developerConnection>https://github.com/youseries/ureport.git</developerConnection>
-		<url>https://github.com/youseries/ureport</url>
+		<connection>https://github.com/sbybfai/ureport.git</connection>
+		<developerConnection>https://github.com/sbybfai/ureport.git</developerConnection>
+		<url>https://github.com/sbybfai/ureport</url>
 	</scm>
-	<organization>
-		<name>Bstek</name>
-		<url>http://www.bstek.com</url>
-	</organization>
 	<build>
 		<resources>
 			<resource>
@@ -177,9 +165,6 @@
 	</distributionManagement>
 
 	<name>UReport2 Parent Project</name>
-	<url>https://github.com/youseries/ureport/tree/master/ureport2-parent</url>
-	<issueManagement>
-		<url>${jira.browse.url}/VELOCITY</url>
-	</issueManagement>
+	<url>https://github.com/sbybfai/ureport/tree/master/ureport2-parent</url>
 	<description>UReport2 Parent Project</description>
 </project>
