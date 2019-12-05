@@ -599,7 +599,9 @@
       "expand":"Expand:",
       "down":"Down",
       "right":"Right",
-      "noneExpand":"None"
+      "noneExpand":"None",
+      "lineHeight":"Line Height:",
+      "lineHeightTip":"Please enter a number!"
     },
     "image":{
       "source":"Image Source：",

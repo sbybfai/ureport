@@ -599,7 +599,9 @@
       "expand":"数据展开方向：",
       "down":"向下",
       "right":"向右",
-      "noneExpand":"不展开"
+      "noneExpand":"不展开",
+      "lineHeight":"行高：",
+      "lineHeightTip":"请输入一个数字,为空表示采用默认行高"
     },
     "image":{
       "source":"图片来源：",

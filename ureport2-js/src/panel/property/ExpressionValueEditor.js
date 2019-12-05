@@ -15,6 +15,7 @@ export default class ExpressionValueEditor extends BaseValueEditor{
         parentContainer.append(this.container);
         this._buildWrapCompute(this.container);
         this._buildExpand();
+        this._buildLineHeight();
         this._buildFormat();
         this._buildConditionProperty();
         this._initCodeEditor();
@@ -84,6 +85,28 @@ export default class ExpressionValueEditor extends BaseValueEditor{
         hot.render();
         setDirty();
     }
+
+    _buildLineHeight(){
+        const _this=this;
+        const group=$(`<div class="form-group" style="margin-left: 8px;margin-top: 5px;margin-bottom: 5px;"><label>${window.i18n.property.expr.lineHeight}</label></div>`);
+        this.lineHeightEditor=$(`<input type="number" class="form-control" placeholder="${window.i18n.property.expr.lineHeightTip}" style="display: inline-block;width: 316px;padding: 3px;font-size: 12px;height: 25px;">`);
+        group.append(this.lineHeightEditor);
+        this.lineHeightEditor.change(function(){
+            const value=$(this).val();
+            _this.cellDef.cellStyle.lineHeight=value;
+            let td=_this.context.hot.getCell(_this.rowIndex,_this.colIndex);
+            if(value===''){
+                $(td).css("line-height",'');
+            }else{
+                $(td).css("line-height",value);
+            }
+            _this.context.hot.render();
+        });
+        this.container.append(group)
+    }
+
+
+
 
     show(cellDef,rowIndex,colIndex,row2Index,col2Index){
         this.cellDef=cellDef;

@@ -41,6 +41,8 @@
     "file-loader": "^0.9.0",
     "style-loader": "^0.13.1",
     "uglifyjs-webpack-plugin": "^1.2.4",
-    "url-loader": "^0.5.7"
+    "url-loader": "^0.5.7",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10"
   }
 }
