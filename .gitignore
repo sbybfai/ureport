@@ -3,3 +3,4 @@
 /ureport2-core/target/
 /ureport2-parent/target/
 .idea
+/ureport2-js/node_modules

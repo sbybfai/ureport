@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>ureport2-core</artifactId>
-	<version>2.3.0-SNAPSHOT</version>
+	<version>2.3.0</version>
 	<parent>
-		<groupId>com.bstek.ureport</groupId>
+		<groupId>org.sbybfai.ureport</groupId>
 		<artifactId>ureport2-parent</artifactId>
 		<version>2.0.6</version>
 	</parent>
@@ -86,34 +86,6 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>3.1.0</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass></mainClass>
-						</manifest>
-					</archive>
-					<descriptorRefs>
-						<descriptorRef>jar-with-dependencies</descriptorRef>
-					</descriptorRefs>
-				</configuration>
-				<executions>
-					<execution>
-						<id>make-assembly</id> <!-- this is used for inheritance merges -->
-						<phase>package</phase> <!-- 指定在打包节点执行jar包合并操作 -->
-						<goals>
-							<goal>single</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 	<licenses>
 		<license>
 			<name>The Apache License, Version 2.0</name>
@@ -124,7 +96,7 @@
 		<connection>scm:git:https://github.com/sbybfai/ureport.git</connection>
 		<developerConnection>scm:git:git@github.com:sbybfai/ureport.git</developerConnection>
 		<url>https://github.com/sbybfai/ureport</url>
-    <tag>ureport2-core-2.2.4</tag>
+    <tag>ureport2-core-2.3.0</tag>
   </scm>
 	<name>UReport2 Core Project</name>
 	<url>https://github.com/sbybfai/ureport/tree/master/ureport2-core</url>
