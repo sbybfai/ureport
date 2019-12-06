@@ -37,7 +37,6 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
-import org.apache.poi.xssf.usermodel.XSSFShape;
 
 import org.sbybfai.ureport.Utils;
 import org.sbybfai.ureport.build.paging.Page;
@@ -51,6 +50,8 @@ import org.sbybfai.ureport.model.Report;
 import org.sbybfai.ureport.model.Row;
 import org.sbybfai.ureport.utils.ImageUtils;
 import org.sbybfai.ureport.utils.UnitUtils;
+
+import static org.apache.poi.util.Units.EMU_PER_PIXEL;
 
 /**
  * @author Jacky.gao
@@ -151,14 +152,14 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 		        		if(obj!=null){
 			        		if(obj instanceof String){
 			        			cell.setCellValue((String)obj);     
-			        			cell.setCellType(CellType.STRING);
+//			        			cell.setCellType(CellType.STRING);
 			        		}else if(obj instanceof Number){
 			        			BigDecimal bigDecimal=Utils.toBigDecimal(obj);
 			        			cell.setCellValue(bigDecimal.floatValue());
-			        			cell.setCellType(CellType.NUMERIC);
+//			        			cell.setCellType(CellType.NUMERIC);
 			        		}else if(obj instanceof Boolean){
 			        			cell.setCellValue((Boolean)obj);
-			        			cell.setCellType(CellType.BOOLEAN);
+//			        			cell.setCellType(CellType.BOOLEAN);
 			        		}else if(obj instanceof Image){
 			        			Image img=(Image)obj;
 			        			InputStream inputStream=ImageUtils.base64DataToInputStream(img.getBase64Data());
@@ -193,10 +194,10 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 			        				anchor.setCol2(i+colSpan);
 			        				anchor.setRow1(rowNumber);
 			        				anchor.setRow2(rowNumber+rowSpan);
-			        				anchor.setDx1(leftMargin * XSSFShape.EMU_PER_PIXEL);
-			        				anchor.setDx2(width * XSSFShape.EMU_PER_PIXEL);
-			        				anchor.setDy1(topMargin * XSSFShape.EMU_PER_PIXEL);
-			        				anchor.setDy2(height * XSSFShape.EMU_PER_PIXEL);
+			        				anchor.setDx1(leftMargin * EMU_PER_PIXEL);
+			        				anchor.setDx2(width * EMU_PER_PIXEL);
+			        				anchor.setDy1(topMargin * EMU_PER_PIXEL);
+			        				anchor.setDy2(height * EMU_PER_PIXEL);
 			        				drawing.createPicture(anchor, pictureIndex);
 			        			}finally{
 			        				IOUtils.closeQuietly(inputStream);
@@ -237,10 +238,10 @@ public class ExcelBuilderWithPaging extends ExcelBuilder{
 			        					anchor.setCol2(i+colSpan);
 			        					anchor.setRow1(rowNumber);
 			        					anchor.setRow2(rowNumber+rowSpan);
-			        					anchor.setDx1(leftMargin * XSSFShape.EMU_PER_PIXEL);
-			        					anchor.setDx2(width * XSSFShape.EMU_PER_PIXEL);
-			        					anchor.setDy1(topMargin * XSSFShape.EMU_PER_PIXEL);
-			        					anchor.setDy2(height * XSSFShape.EMU_PER_PIXEL);
+			        					anchor.setDx1(leftMargin * EMU_PER_PIXEL);
+			        					anchor.setDx2(width * EMU_PER_PIXEL);
+			        					anchor.setDy1(topMargin * EMU_PER_PIXEL);
+			        					anchor.setDy2(height * EMU_PER_PIXEL);
 			        					drawing.createPicture(anchor, pictureIndex);
 			        				}finally{
 			        					IOUtils.closeQuietly(inputStream);
