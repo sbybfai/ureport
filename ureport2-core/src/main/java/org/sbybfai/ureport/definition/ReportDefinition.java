@@ -171,6 +171,14 @@ public class ReportDefinition implements Serializable{
 			if(lineHeight>0){
 				sb.append("line-height:"+lineHeight+";");
 			}
+			String formType=cellStyle.getFormType();
+			if(StringUtils.isNotBlank(formType)){
+				sb.append("form-type:"+formType+";");
+			}
+			String formName=cellStyle.getFormName();
+			if(StringUtils.isNotBlank(formType)){
+				sb.append("form-name:"+formName+";");
+			}
 			String bgcolor=cellStyle.getBgcolor();
 			if(StringUtils.isNotBlank(bgcolor)){
 				sb.append("background-color:rgb("+bgcolor+");");				

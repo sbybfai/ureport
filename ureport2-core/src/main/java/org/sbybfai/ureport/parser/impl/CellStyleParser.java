@@ -124,6 +124,14 @@ public class CellStyleParser implements Parser<CellStyle> {
 		if(StringUtils.isNotBlank(lineHeight)){
 			style.setLineHeight(Utils.toBigDecimal(lineHeight).floatValue());
 		}
+		String formType=element.attributeValue("form-type");
+		if(StringUtils.isNotBlank(formType)){
+			style.setFormType(formType);
+		}
+		String fromName=element.attributeValue("form-name");
+		if(StringUtils.isNotBlank(fromName)){
+			style.setFormName(fromName);
+		}
 		for(Object obj:element.elements()){
 			if(obj==null || !(obj instanceof Element)){
 				continue;

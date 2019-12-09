@@ -645,6 +645,12 @@ function buildCellStyle(cellStyle,condition){
     if(cellStyle.lineHeight){
         cellXml+=` line-height="${cellStyle.lineHeight}"`;
     }
+    if(cellStyle.formType){
+        cellXml+=` form-type="${cellStyle.formType}"`;
+    }
+    if(cellStyle.formName){
+        cellXml+=` form-name="${cellStyle.formName}"`;
+    }
     cellXml+='>';
     let leftBorder=cellStyle.leftBorder;
     if(leftBorder && leftBorder.style!=="none"){

@@ -617,7 +617,9 @@
     "simple":{
       "content":"文本内容",
       "lineHeight":"行距：",
-      "tip":"请输入一个数字,为空表示采用默认行距"
+      "tip":"请输入一个数字,为空表示采用默认行距",
+      "formType":"表单类型：",
+      "formName":"表单Name："
     },
     "slash":{
       "content":"斜表头内容",

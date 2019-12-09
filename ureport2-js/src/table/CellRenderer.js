@@ -129,6 +129,16 @@ export function afterRenderer(td,row,col,prop,value,cellProperties){
     }else{
         $td.css('line-height','');
     }
+    if(cellStyle.formType){
+        $td.css('from-type',cellStyle.formType);
+    }else{
+        $td.css('from-type','');
+    }
+    if(cellStyle.formName){
+        $td.css('from-name',cellStyle.formName);
+    }else{
+        $td.css('from-name','');
+    }
 
     const leftBorder=cellStyle.leftBorder;
     if(leftBorder){

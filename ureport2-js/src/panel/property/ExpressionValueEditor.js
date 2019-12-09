@@ -16,6 +16,7 @@ export default class ExpressionValueEditor extends BaseValueEditor{
         this._buildWrapCompute(this.container);
         this._buildExpand();
         this._buildLineHeight();
+        this._buildFormType();
         this._buildFormat();
         this._buildConditionProperty();
         this._initCodeEditor();
@@ -88,7 +89,7 @@ export default class ExpressionValueEditor extends BaseValueEditor{
 
     _buildLineHeight(){
         const _this=this;
-        const group=$(`<div class="form-group" style="margin-left: 8px;margin-top: 5px;margin-bottom: 5px;"><label>${window.i18n.property.expr.lineHeight}</label></div>`);
+        const group=$(`<div class="form-group" style="margin-top: 5px;margin-bottom: 5px;"><label>${window.i18n.property.expr.lineHeight}</label></div>`);
         this.lineHeightEditor=$(`<input type="number" class="form-control" placeholder="${window.i18n.property.expr.lineHeightTip}" style="display: inline-block;width: 316px;padding: 3px;font-size: 12px;height: 25px;">`);
         group.append(this.lineHeightEditor);
         this.lineHeightEditor.change(function(){
@@ -105,6 +106,23 @@ export default class ExpressionValueEditor extends BaseValueEditor{
         this.container.append(group)
     }
 
+    _buildFormType(){
+        const _this=this;
+        const group=$(`<div class="form-group" style=margin-top: 5px;margin-bottom: 5px;"><label>${window.i18n.property.simple.formType}</label></div>`);
+        this.formTypeEditor=$(`<select type="text" class="form-control" style="display: inline-block;width: 80px;padding: 3px;font-size: 12px;height: 25px;"><option value=""></option><option>input</option><option>textarea</option></select>`);
+        this.formNameEditor=$(`<label>&nbsp;${window.i18n.property.simple.formName}</label><input type="text" class="form-control" style="display: inline-block;width: 130px;padding: 3px;font-size: 12px;height: 25px;"/>`);
+        group.append(this.formTypeEditor);
+        group.append(this.formNameEditor);
+        this.formTypeEditor.change(function(){
+            const value=$(this).val();
+            _this.cellDef.cellStyle.formType=value;
+        });
+        this.formNameEditor.change(function(){
+            const value=$(this).val();
+            _this.cellDef.cellStyle.formName=value;
+        });
+        this.container.append(group);
+    }
 
 
 
@@ -135,6 +153,21 @@ export default class ExpressionValueEditor extends BaseValueEditor{
             this.enableWrapComput.children('input').prop('checked',true);
         }else{
             this.disableWrapComput.children('input').prop('checked',true);
+        }
+        if(cellStyle.lineHeight){
+            this.lineHeightEditor.val(cellStyle.lineHeight);
+        }else{
+            this.lineHeightEditor.val('');
+        }
+        if(cellStyle.formType){
+            this.formTypeEditor.val(cellStyle.formType);
+        }else{
+            this.formTypeEditor.val('');
+        }
+        if(cellStyle.formName){
+            this.formNameEditor.val(cellStyle.formName);
+        }else{
+            this.formNameEditor.val('');
         }
     }
     hide(){

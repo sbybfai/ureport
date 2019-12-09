@@ -4,3 +4,8 @@
 /ureport2-parent/target/
 .idea
 /ureport2-js/node_modules
+/ureport2-demo/ureport2-demo.iml
+/ureport2-console/ureport2-console.iml
+/ureport2-core/ureport2-core.iml
+/ureport2-font/ureport2-font.iml
+/ureport2-parent/ureport2-parent.iml

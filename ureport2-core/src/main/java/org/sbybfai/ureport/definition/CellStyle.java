@@ -36,6 +36,8 @@ public class CellStyle implements Serializable{
 	private String fontFamily;
 	private String format;
 	private float lineHeight;
+	private String formType;
+	private String formName;
 	private Alignment align;
 	private Alignment valign;
 	private Boolean bold;
@@ -179,6 +181,22 @@ public class CellStyle implements Serializable{
 
 	public void setLineHeight(float lineHeight) {
 		this.lineHeight = lineHeight;
+	}
+
+	public String getFormType() {
+		return formType;
+	}
+
+	public void setFormType(String formType) {
+		this.formType = formType;
+	}
+
+	public String getFormName() {
+		return formName;
+	}
+
+	public void setFormName(String formName) {
+		this.formName = formName;
 	}
 
 	@JsonIgnore

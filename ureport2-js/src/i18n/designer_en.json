@@ -617,7 +617,9 @@
     "simple":{
       "content":"Text Content",
       "lineHeight":"Line Height",
-      "tip":"Please enter a number!"
+      "tip":"Please enter a number!",
+      "formType":"Form Type",
+      "formName":"Form Name"
     },
     "slash":{
       "content":"Slash Content",

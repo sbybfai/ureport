@@ -234,7 +234,25 @@ public class HtmlProducer{
 					if(text.equals("")){
 						text="&nbsp;";
 					}
-					sb.append(text);					
+					String formType = cell.getCellStyle().getFormType();
+					if(formType != null){
+						String element = "";
+						if(formType.equals("input")){
+							element= "<input name='${name}' value='${val}'  style='width:100%;height:${height}pt;border:0;background-color:whitesmoke;';/>";
+						} else if(formType.equals("textarea")){
+							element= "<textarea name='${name}' style='width:100%;height:${height}pt;border:0;padding:0;resize:none;display: block;background-color:whitesmoke;'>${val}</textarea>";
+						}
+						int formHeight = height;
+						for(int index = i + 1; index < i + rowSpan; index++){
+							formHeight += rows.get(index).getRealHeight();
+						}
+						element = element.replace("${val}", text).replace("${height}", String.valueOf(formHeight));
+						String formName = cell.getCellStyle().getFormName();
+						element = element.replace("${name}", formName != null ? formName : "");
+						sb.append(element);
+					} else{
+						sb.append(text);
+					}
 				}
 				if(hasLink){
 					sb.append("</a>");
