@@ -6,3 +6,12 @@ server:
     min-spare-threads: 30
     max-http-post-size: -1
   port: 9090
+
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+        url: jdbc:mysql://127.0.0.1:3306/mps?useUnicode=true&serverTimezone=Asia/Shanghai
+        username: root
+        password: Admin@123
