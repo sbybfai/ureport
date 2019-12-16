@@ -23,6 +23,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.BeansException;
@@ -189,6 +191,26 @@ public class Utils implements ApplicationContextAware{
 		}
 		throw new ReportComputeException("Can not convert "+obj+" to Date.");
 	}
+
+	/*
+	 * 获取指定单元格内容，并替换字符串
+	 * property: xxx_{A1}_xxx
+	 * result: xxx_newString_xxx
+	 */
+	public static String doReplaceCellValue(Context context, Cell currentCell, String property){
+		String regex = "\\{([^}])*\\}";
+		Pattern pattern  = Pattern.compile(regex);
+		Matcher matcher  = pattern.matcher(property);
+		while (matcher.find()){
+			String result = matcher.group();
+			String cellName = result.substring(1, result.length() - 1);
+			List<Cell> targetCells = Utils.fetchTargetCells(currentCell, context, cellName);
+			String replaceString = targetCells.get(0).getData().toString();
+			property = property.replace("{"+cellName+"}", replaceString);
+		}
+		return property;
+	}
+
 	public static BigDecimal toBigDecimal(Object obj){
 		if(obj==null){
 			return null;
@@ -201,7 +223,7 @@ public class Utils implements ApplicationContextAware{
 			}
 			try{
 				String str=obj.toString().trim();
-				return new BigDecimal(str);				
+				return new BigDecimal(str);
 			}catch(Exception ex){
 				throw new ConvertException("Can not convert "+obj+" to BigDecimal.");
 			}

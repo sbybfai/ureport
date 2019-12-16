@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import org.sbybfai.ureport.Utils;
 import org.sbybfai.ureport.build.BindData;
 import org.sbybfai.ureport.build.Context;
 import org.sbybfai.ureport.build.paging.Page;
@@ -234,11 +235,12 @@ public class HtmlProducer{
 					if(text.equals("")){
 						text="&nbsp;";
 					}
-					String formType = cell.getCellStyle().getFormType();
+					CellStyle cellStyle =  cell.getCellStyle();
+					String formType = cellStyle.getFormType();
 					if(formType != null){
 						String element = "";
 						if(formType.equals("input")){
-							element= "<input name='${name}' value='${val}'  style='width:100%;height:${height}pt;border:0;background-color:whitesmoke;';/>";
+							element= "<input name='${name}' value='${val}' format='${format}' style='width:100%;height:${height}pt;border:0;background-color:whitesmoke;' />";
 						} else if(formType.equals("textarea")){
 							element= "<textarea name='${name}' style='width:100%;height:${height}pt;border:0;padding:0;resize:none;display: block;background-color:whitesmoke;'>${val}</textarea>";
 						}
@@ -246,9 +248,13 @@ public class HtmlProducer{
 						for(int index = i + 1; index < i + rowSpan; index++){
 							formHeight += rows.get(index).getRealHeight();
 						}
+
 						element = element.replace("${val}", text).replace("${height}", String.valueOf(formHeight));
 						String formName = cell.getCellStyle().getFormName();
+						formName = Utils.doReplaceCellValue(context, cell, formName);
 						element = element.replace("${name}", formName != null ? formName : "");
+						String format = cellStyle.getFormat();
+						element = element.replace("${format}", format != null ? format : "");
 						sb.append(element);
 					} else{
 						sb.append(text);

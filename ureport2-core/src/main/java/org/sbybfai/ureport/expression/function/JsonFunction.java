@@ -44,7 +44,7 @@ public class JsonFunction implements Function {
 		}
 		String obj = buildData(dataList.get(0));
 		String property=buildData(dataList.get(1));
-		
+		property = Utils.doReplaceCellValue(context, currentCell, property);
 		if(obj==null || property==null || obj.equals("") || property.equals("")){
 			return null;
 		}
@@ -56,6 +56,7 @@ public class JsonFunction implements Function {
 			throw new ReportException(ex);
 		}
 	}
+
 
 	private String buildData(ExpressionData<?> exprData) {
 		String obj=null;
