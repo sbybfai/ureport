@@ -15,20 +15,24 @@
  ******************************************************************************/
 package org.sbybfai.ureport.export;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.sbybfai.ureport.build.paging.Page;
 import org.sbybfai.ureport.cache.CacheUtils;
 import org.sbybfai.ureport.chart.ChartData;
 import org.sbybfai.ureport.definition.ReportDefinition;
 import org.sbybfai.ureport.export.excel.high.ExcelProducer;
+import org.sbybfai.ureport.export.excel.high.builder.ExcelBuilderDirect;
 import org.sbybfai.ureport.export.excel.low.Excel97Producer;
 import org.sbybfai.ureport.export.html.HtmlProducer;
 import org.sbybfai.ureport.export.html.HtmlReport;
 import org.sbybfai.ureport.export.pdf.PdfProducer;
 import org.sbybfai.ureport.export.word.high.WordProducer;
-import org.sbybfai.ureport.model.Report;
+import org.sbybfai.ureport.model.*;
 
 /**
  * @author Jacky.gao
@@ -164,5 +168,19 @@ public class ExportManagerImpl implements ExportManager {
 	
 	public void setReportRender(ReportRender reportRender) {
 		this.reportRender = reportRender;
+	}
+
+	private Report getReport(String xmlName, Map param, OutputStream out) {
+		ExportConfigureImpl config = new ExportConfigureImpl(xmlName, param, out);
+		String file = config.getFile();
+		Map<String, Object> parameters = config.getParameters();
+		ReportDefinition reportDefinition = reportRender.getReportDefinition(file);
+		return reportRender.render(reportDefinition, parameters);
+	}
+
+	public void createSheet(String xmlName, SXSSFWorkbook wb, String sheetName, Map param){
+		Report report = getReport(xmlName, param ,new ByteArrayOutputStream());
+		ExcelBuilderDirect excelBuilderDirect= new ExcelBuilderDirect();
+		excelBuilderDirect.build(report, wb, sheetName);
 	}
 }

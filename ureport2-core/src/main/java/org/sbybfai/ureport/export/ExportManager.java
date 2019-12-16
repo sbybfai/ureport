@@ -17,6 +17,7 @@ package org.sbybfai.ureport.export;
 
 import java.util.Map;
 
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.sbybfai.ureport.export.html.HtmlReport;
 
 /**
@@ -82,4 +83,14 @@ public interface ExportManager {
 	 * @param config 包含报表模版文件名、参数等信息的配置对象
 	 */
 	void exportWord(ExportConfigure config);
+
+
+	/**
+	 * Workbook对象创建sheet
+	 * @param xmlName 模板名称
+	 * @param wb WorkBook 工作簿对象
+	 * @param sheetName SheetName 表名
+	 * @param param 传参
+	 */
+	void createSheet(String xmlName, SXSSFWorkbook wb, String sheetName, Map param);
 }
