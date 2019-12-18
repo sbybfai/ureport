@@ -42,6 +42,7 @@ import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.sbybfai.ureport.Utils;
 import org.sbybfai.ureport.build.paging.Page;
 import org.sbybfai.ureport.chart.ChartData;
+import org.sbybfai.ureport.definition.HtmlReportAlign;
 import org.sbybfai.ureport.definition.Orientation;
 import org.sbybfai.ureport.definition.Paper;
 import org.sbybfai.ureport.definition.PaperType;
@@ -51,6 +52,7 @@ import org.sbybfai.ureport.model.Image;
 import org.sbybfai.ureport.model.Report;
 import org.sbybfai.ureport.model.Row;
 import org.sbybfai.ureport.utils.ImageUtils;
+import org.sbybfai.ureport.utils.POIUtils;
 import org.sbybfai.ureport.utils.UnitUtils;
 
 import static org.apache.poi.util.Units.EMU_PER_PIXEL;
@@ -106,8 +108,8 @@ public class Excel97Producer {
 			        		if(w<1){
 			        			continue;
 			        		}
-			        		double colWidth=UnitUtils.pointToPixel(w)*37.5;
-			        		sheet.setColumnWidth(i,(short)colWidth);
+							short colWidth= POIUtils.getPOIColWidth(w);
+			        		sheet.setColumnWidth(i,colWidth);
 			        		org.apache.poi.ss.usermodel.Cell cell = row.getCell(i);
 			        		if(cell!=null){
 			        			continue;
@@ -255,8 +257,8 @@ public class Excel97Producer {
 		        		if(w<1){
 		        			continue;
 		        		}
-		        		double colWidth=UnitUtils.pointToPixel(w)*37.5;
-		        		sheet.setColumnWidth(i,(short)colWidth);
+						short colWidth= POIUtils.getPOIColWidth(w);
+		        		sheet.setColumnWidth(i,colWidth);
 		        		org.apache.poi.ss.usermodel.Cell cell = row.getCell(i);
 		        		if(cell!=null){
 		        			continue;
@@ -409,6 +411,9 @@ public class Excel97Producer {
 			printSetup.setLandscape(true);
 		}
 		setupPaper(paperType, printSetup);
+		if(paper.getHtmlReportAlign() == HtmlReportAlign.center){
+			sheet.setHorizontallyCenter(true);
+		}
 		int leftMargin=paper.getLeftMargin();
 		int rightMargin=paper.getRightMargin();
 		int topMargin=paper.getTopMargin();

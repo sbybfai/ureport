@@ -81,6 +81,10 @@ public class PaperParser implements Parser<Paper> {
 		if(StringUtils.isNotBlank(htmlIntervalRefreshValue)){
 			paper.setHtmlIntervalRefreshValue(Integer.valueOf(htmlIntervalRefreshValue));
 		}
+		String htmlPaddingValue=element.attributeValue("html-padding-value");
+		if(StringUtils.isNotBlank(htmlPaddingValue)){
+			paper.setHtmlPaddingValue(htmlPaddingValue);
+		}
 		paper.setBgImage(element.attributeValue("bg-image"));
 		return paper;
 	}

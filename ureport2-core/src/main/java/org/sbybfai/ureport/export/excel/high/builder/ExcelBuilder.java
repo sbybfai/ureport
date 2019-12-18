@@ -24,6 +24,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFPrintSetup;
 
+import org.sbybfai.ureport.definition.HtmlReportAlign;
 import org.sbybfai.ureport.definition.Orientation;
 import org.sbybfai.ureport.definition.Paper;
 import org.sbybfai.ureport.definition.PaperType;
@@ -76,6 +77,9 @@ public abstract class ExcelBuilder {
 			printSetup.setOrientation(PrintOrientation.LANDSCAPE);			
 		}
 		setupPaper(paperType, printSetup);
+		if(paper.getHtmlReportAlign() == HtmlReportAlign.center){
+			sheet.setHorizontallyCenter(true);
+		}
 		int leftMargin=paper.getLeftMargin();
 		int rightMargin=paper.getRightMargin();
 		int topMargin=paper.getTopMargin();

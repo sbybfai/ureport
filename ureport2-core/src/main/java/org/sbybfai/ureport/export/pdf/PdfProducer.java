@@ -223,7 +223,7 @@ public class PdfProducer implements Producer {
 		CellStyle rowStyle=cellInfo.getRow().getCustomCellStyle();
 		CellStyle colStyle=cellInfo.getColumn().getCustomCellStyle();
 		PdfPCell cell=newPdfCell(cellInfo,cellHeight);
-		cell.setPadding(0);
+//		cell.setPadding(0);
 		cell.setBorder(PdfPCell.NO_BORDER);
 		cell.setCellEvent(new CellBorderEvent(style,customStyle));
 		int rowSpan=cellInfo.getPageRowSpan();

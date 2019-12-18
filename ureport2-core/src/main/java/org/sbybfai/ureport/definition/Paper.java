@@ -39,6 +39,8 @@ public class Paper implements Serializable{
 	private int columnCount=2;
 	private int columnMargin=5;
 	private int htmlIntervalRefreshValue=0;
+	private String htmlPaddingValue="2px";
+
 	public int getLeftMargin() {
 		return leftMargin;
 	}
@@ -157,5 +159,13 @@ public class Paper implements Serializable{
 
 	public void setHtmlIntervalRefreshValue(int htmlIntervalRefreshValue) {
 		this.htmlIntervalRefreshValue = htmlIntervalRefreshValue;
+	}
+
+	public String getHtmlPaddingValue() {
+		return htmlPaddingValue;
+	}
+
+	public void setHtmlPaddingValue(String htmlPaddingValue) {
+		this.htmlPaddingValue = htmlPaddingValue;
 	}
 }

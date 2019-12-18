@@ -48,6 +48,7 @@ import org.sbybfai.ureport.model.Image;
 import org.sbybfai.ureport.model.Report;
 import org.sbybfai.ureport.model.Row;
 import org.sbybfai.ureport.utils.ImageUtils;
+import org.sbybfai.ureport.utils.POIUtils;
 import org.sbybfai.ureport.utils.UnitUtils;
 
 import static org.apache.poi.util.Units.EMU_PER_PIXEL;
@@ -99,9 +100,9 @@ public class ExcelBuilderDirect extends ExcelBuilder {
 						skipCol++;
 						continue;
 					}
-					double colWidth=UnitUtils.pointToPixel(w)*37.5;
+					short colWidth= POIUtils.getPOIColWidth(w);
 					int colNum=i-skipCol;
-					sheet.setColumnWidth(colNum,(short)colWidth);
+					sheet.setColumnWidth(colNum,colWidth);
 					org.apache.poi.ss.usermodel.Cell cell = row.getCell(colNum);
 					if(cell!=null){
 						continue;

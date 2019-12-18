@@ -272,6 +272,16 @@ export default class SettingsDialog{
             setDirty();
         });
 
+        const htmlPaddingGroup=$(`<div class="form-group" style="display: inline-block;margin-top: 5px;"><label>${window.i18n.dialog.setting.htmlPadding}</label></div>`);
+        htmlReportAlignGroup.append(htmlPaddingGroup);
+        this.htmlPaddingEditor=$(`<input type="text" class="form-control" placeholder="${window.i18n.dialog.setting.padding_tip}" value="2px" style="width: 90px;display: inline-block">`);
+        htmlPaddingGroup.append(this.htmlPaddingEditor);
+        this.htmlPaddingEditor.change(function(){
+            let value=$(this).val();
+            _this.paper.htmlPaddingValue=value;
+            setDirty();
+        });
+
         const bgImageGroup=$(`<div class="form-group"><label>${window.i18n.dialog.setting.bg}</label></div>`);
         pageTab.append(bgImageGroup);
         this.bgImageEditor=$(`<input type="text" class="form-control" style="display: inline-block;width: 470px;" placeholder="${window.i18n.dialog.setting.bgTip}">`);
@@ -523,6 +533,7 @@ export default class SettingsDialog{
         this.pageSelect.val(this.paper.paperType);
         this.htmlReportAlignSelect.val(this.paper.htmlReportAlign);
         this.htmlIntervalEditor.val(this.paper.htmlIntervalRefreshValue);
+        this.htmlPaddingEditor.val(this.paper.htmlPaddingValue);
         this.bgImageEditor.val(this.paper.bgImage || '');
         this.pageWidthEditor.val(pointToMM(this.paper.width));
         this.pageHeightEditor.val(pointToMM(this.paper.height));

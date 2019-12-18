@@ -45,6 +45,7 @@ import org.sbybfai.ureport.model.Row;
  * @since 2016年12月30日
  */
 public class HtmlProducer{
+
 	public String produce(Report report) {
 		List<Row> rows=report.getRows();
 		List<Column> columns=report.getColumns();
@@ -96,7 +97,9 @@ public class HtmlProducer{
 		StringBuilder sb=new StringBuilder();
 		int tableWidth=buildTableWidth(columns);
 		String bgStyle="";
-		String bgImage=context.getReport().getPaper().getBgImage();
+		Report report = context.getReport();
+		String bgImage=report.getPaper().getBgImage();
+		String htmlPaddingValue = report.getPaper().getHtmlPaddingValue();
 		if(StringUtils.isNotBlank(bgImage)){
 			bgStyle=";background:url("+bgImage+") no-repeat";
 		}
@@ -240,9 +243,9 @@ public class HtmlProducer{
 					if(formType != null){
 						String element = "";
 						if(formType.equals("input")){
-							element= "<input name='${name}' value='${val}' format='${format}' style='width:100%;height:${height}pt;border:0;background-color:whitesmoke;' />";
+							element= "<input name='${name}' value='${val}' format='${format}' style='width:100%;height:${height}pt;border:0;padding:${padding};background-color:whitesmoke;' />";
 						} else if(formType.equals("textarea")){
-							element= "<textarea name='${name}' style='width:100%;height:${height}pt;border:0;padding:0;resize:none;display: block;background-color:whitesmoke;'>${val}</textarea>";
+							element= "<textarea name='${name}' style='width:100%;height:${height}pt;border:0;padding:${padding};resize:none;display: block;background-color:whitesmoke;'>${val}</textarea>";
 						}
 						int formHeight = height;
 						for(int index = i + 1; index < i + rowSpan; index++){
@@ -255,8 +258,11 @@ public class HtmlProducer{
 						element = element.replace("${name}", formName != null ? formName : "");
 						String format = cellStyle.getFormat();
 						element = element.replace("${format}", format != null ? format : "");
+						element = element.replace("${padding}", htmlPaddingValue);
 						sb.append(element);
 					} else{
+						text = "<span style='padding:${padding};'> ${text} </span>".replace("${text}", text);
+						text = text.replace("${padding}", htmlPaddingValue);
 						sb.append(text);
 					}
 				}

@@ -18,7 +18,7 @@ export default class FontSizeTool extends Tool{
             <span class="caret"></span>
             <span class="sr-only">${window.i18n.tools.fontSize.changeMenu}</span>
         </button>`);
-        const ul=$(`<ul class="dropdown-menu" role="menu" style="padding: 1px;"></ul>`);
+        const ul=$(`<ul class="dropdown-menu" role="menu" style="padding: 1px;height:600px;overflow-y:scroll"></ul>`);
         for(let i=1;i<=100;i++){
             let size=$(`<li data="${i}"><a href='###'>${i}</a></li>`);
             ul.append(size);

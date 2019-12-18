@@ -116,6 +116,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 				context.put("error", false);
 				context.put("file", req.getParameter("_u"));
 				context.put("intervalRefreshValue",htmlReport.getHtmlIntervalRefreshValue());
+				context.put("htmlPaddingValue",htmlReport.getHtmlPaddingValue());
 				String customParameters=buildCustomParameters(req);
 				context.put("customParameters", customParameters);
 				context.put("_t", "");
@@ -309,6 +310,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			htmlReport.setSearchFormData(reportDefinition.buildSearchFormData(report.getContext().getDatasetMap(),parameters));
 			htmlReport.setReportAlign(report.getPaper().getHtmlReportAlign().name());
 			htmlReport.setHtmlIntervalRefreshValue(report.getPaper().getHtmlIntervalRefreshValue());
+			htmlReport.setHtmlPaddingValue(report.getPaper().getHtmlPaddingValue());
 		}else{
 			if(StringUtils.isNotBlank(pageIndex) && !pageIndex.equals("0")){
 				int index=Integer.valueOf(pageIndex);

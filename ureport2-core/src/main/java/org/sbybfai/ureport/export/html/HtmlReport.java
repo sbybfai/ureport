@@ -32,6 +32,7 @@ public class HtmlReport {
 	private String reportAlign;
 	private Collection<ChartData> chartDatas;
 	private int htmlIntervalRefreshValue;
+	private String htmlPaddingValue;
 	private SearchFormData searchFormData;
 	public String getContent() {
 		return content;
@@ -98,5 +99,13 @@ public class HtmlReport {
 	}
 	public void setSearchFormData(SearchFormData searchFormData) {
 		this.searchFormData = searchFormData;
+	}
+
+	public String getHtmlPaddingValue() {
+		return htmlPaddingValue;
+	}
+
+	public void setHtmlPaddingValue(String htmlPaddingValue) {
+		this.htmlPaddingValue = htmlPaddingValue;
 	}
 }
