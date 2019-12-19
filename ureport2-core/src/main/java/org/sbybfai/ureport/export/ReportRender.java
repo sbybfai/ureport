@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.sbybfai.ureport.definition.ReportType;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -48,13 +49,13 @@ public class ReportRender implements ApplicationContextAware{
 	private Collection<ReportProvider> reportProviders;
 	private DownCellbuilder downCellParentbuilder=new DownCellbuilder();
 	private RightCellbuilder rightCellParentbuilder=new RightCellbuilder();
-	public Report render(String file,Map<String,Object> parameters){
+	public Report render(String file,Map<String,Object> parameters,ReportType reportType){
 		ReportDefinition reportDefinition=getReportDefinition(file);
-		return reportBuilder.buildReport(reportDefinition,parameters);
+		return reportBuilder.buildReport(reportDefinition,parameters, reportType);
 	}
 	
-	public Report render(ReportDefinition reportDefinition,Map<String,Object> parameters){
-		return reportBuilder.buildReport(reportDefinition,parameters);
+	public Report render(ReportDefinition reportDefinition, Map<String,Object> parameters, ReportType reportType){
+		return reportBuilder.buildReport(reportDefinition,parameters,reportType);
 	}
 	
 	public ReportDefinition getReportDefinition(String file){

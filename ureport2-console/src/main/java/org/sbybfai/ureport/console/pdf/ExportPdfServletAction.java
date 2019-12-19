@@ -32,6 +32,7 @@ import org.sbybfai.ureport.console.cache.TempObjectCache;
 import org.sbybfai.ureport.console.exception.ReportDesignException;
 import org.sbybfai.ureport.definition.Paper;
 import org.sbybfai.ureport.definition.ReportDefinition;
+import org.sbybfai.ureport.definition.ReportType;
 import org.sbybfai.ureport.exception.ReportComputeException;
 import org.sbybfai.ureport.exception.ReportException;
 import org.sbybfai.ureport.export.ExportConfigure;
@@ -88,7 +89,7 @@ public class ExportPdfServletAction extends BaseServletAction{
 				if(reportDefinition==null){
 					throw new ReportDesignException("Report data has expired,can not do export pdf.");
 				}
-				Report report=reportBuilder.buildReport(reportDefinition, parameters);	
+				Report report=reportBuilder.buildReport(reportDefinition, parameters, ReportType.pdf);
 				pdfProducer.produce(report, outputStream);
 			}else{
 				ExportConfigure configure=new ExportConfigureImpl(file,parameters,outputStream);
@@ -114,10 +115,10 @@ public class ExportPdfServletAction extends BaseServletAction{
 			if(reportDefinition==null){
 				throw new ReportDesignException("Report data has expired,can not do export pdf.");
 			}
-			report=reportBuilder.buildReport(reportDefinition, parameters);	
+			report=reportBuilder.buildReport(reportDefinition, parameters, ReportType.pdf);
 		}else{
 			ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-			report=reportRender.render(reportDefinition, parameters);
+			report=reportRender.render(reportDefinition, parameters, ReportType.pdf);
 		}
 		String paper=req.getParameter("_paper");
 		ObjectMapper mapper=new ObjectMapper();

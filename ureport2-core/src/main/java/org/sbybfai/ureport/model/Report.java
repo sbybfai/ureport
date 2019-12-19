@@ -23,10 +23,7 @@ import java.util.Map;
 import org.sbybfai.ureport.build.Context;
 import org.sbybfai.ureport.build.paging.Page;
 import org.sbybfai.ureport.build.paging.PagingBuilder;
-import org.sbybfai.ureport.definition.Band;
-import org.sbybfai.ureport.definition.ConditionPropertyItem;
-import org.sbybfai.ureport.definition.HeaderFooterDefinition;
-import org.sbybfai.ureport.definition.Paper;
+import org.sbybfai.ureport.definition.*;
 
 /**
  * @author Jacky.gao
@@ -50,6 +47,7 @@ public class Report {
 	private List<Cell> lazyComputeCells=new ArrayList<Cell>();
 	private Map<Row,Map<Column,Cell>> rowColCellMap=new HashMap<Row,Map<Column,Cell>>();
 	private Map<String,List<Cell>> cellsMap=new HashMap<String,List<Cell>>();
+	private ReportType reportType;
 	public void insertRow(Row row,int rowNumber){
 		int pos=rowNumber-1;
 		rows.add(pos,row);
@@ -238,5 +236,11 @@ public class Report {
 	}
 	public void setFooter(HeaderFooterDefinition footer) {
 		this.footer = footer;
+	}
+	public ReportType getReportType() {
+		return reportType;
+	}
+	public void setReportType(ReportType reportType) {
+		this.reportType = reportType;
 	}
 }

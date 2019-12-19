@@ -25,6 +25,7 @@ import org.sbybfai.ureport.build.paging.Page;
 import org.sbybfai.ureport.cache.CacheUtils;
 import org.sbybfai.ureport.chart.ChartData;
 import org.sbybfai.ureport.definition.ReportDefinition;
+import org.sbybfai.ureport.definition.ReportType;
 import org.sbybfai.ureport.export.excel.high.ExcelProducer;
 import org.sbybfai.ureport.export.excel.high.builder.ExcelBuilderDirect;
 import org.sbybfai.ureport.export.excel.low.Excel97Producer;
@@ -48,7 +49,7 @@ public class ExportManagerImpl implements ExportManager {
 	@Override
 	public HtmlReport exportHtml(String file,String contextPath,Map<String, Object> parameters) {
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, parameters);
+		Report report=reportRender.render(reportDefinition, parameters, ReportType.html);
 		Map<String, ChartData> chartMap=report.getContext().getChartDataMap();
 		if(chartMap.size()>0){
 			CacheUtils.storeChartDataMap(chartMap);				
@@ -71,7 +72,7 @@ public class ExportManagerImpl implements ExportManager {
 	@Override
 	public HtmlReport exportHtml(String file,String contextPath,Map<String, Object> parameters, int pageIndex) {
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, parameters);
+		Report report=reportRender.render(reportDefinition, parameters,ReportType.html);
 		Map<String, ChartData> chartMap=report.getContext().getChartDataMap();
 		if(chartMap.size()>0){
 			CacheUtils.storeChartDataMap(chartMap);				
@@ -104,7 +105,7 @@ public class ExportManagerImpl implements ExportManager {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, parameters);
+		Report report=reportRender.render(reportDefinition, parameters,ReportType.pdf);
 		pdfProducer.produce(report, config.getOutputStream());
 	}
 	@Override
@@ -112,7 +113,7 @@ public class ExportManagerImpl implements ExportManager {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, parameters);
+		Report report=reportRender.render(reportDefinition, parameters,ReportType.word);
 		wordProducer.produce(report, config.getOutputStream());
 	}
 	@Override
@@ -120,7 +121,7 @@ public class ExportManagerImpl implements ExportManager {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, parameters);
+		Report report=reportRender.render(reportDefinition, parameters,ReportType.excel);
 		excelProducer.produce(report, config.getOutputStream());
 	}
 	
@@ -129,7 +130,7 @@ public class ExportManagerImpl implements ExportManager {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, parameters);
+		Report report=reportRender.render(reportDefinition, parameters,ReportType.excel);
 		excel97Producer.produce(report, config.getOutputStream());
 	}
 	
@@ -138,7 +139,7 @@ public class ExportManagerImpl implements ExportManager {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, parameters);
+		Report report=reportRender.render(reportDefinition, parameters,ReportType.excel);
 		excelProducer.produceWithPaging(report, config.getOutputStream());
 	}
 	@Override
@@ -146,7 +147,7 @@ public class ExportManagerImpl implements ExportManager {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, parameters);
+		Report report=reportRender.render(reportDefinition, parameters,ReportType.excel);
 		excel97Producer.produceWithPaging(report, config.getOutputStream());
 	}
 	
@@ -155,7 +156,7 @@ public class ExportManagerImpl implements ExportManager {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, parameters);
+		Report report=reportRender.render(reportDefinition, parameters,ReportType.excel);
 		excelProducer.produceWithSheet(report, config.getOutputStream());
 	}
 	
@@ -164,7 +165,7 @@ public class ExportManagerImpl implements ExportManager {
 		String file=config.getFile();
 		Map<String, Object> parameters=config.getParameters();
 		ReportDefinition reportDefinition=reportRender.getReportDefinition(file);
-		Report report=reportRender.render(reportDefinition, parameters);
+		Report report=reportRender.render(reportDefinition, parameters,ReportType.excel);
 		excel97Producer.produceWithSheet(report, config.getOutputStream());
 	}
 	
@@ -172,16 +173,16 @@ public class ExportManagerImpl implements ExportManager {
 		this.reportRender = reportRender;
 	}
 
-	private Report getReport(String xmlName, Map param, OutputStream out) {
+	private Report getSheetReport(String xmlName, Map param, OutputStream out) {
 		ExportConfigureImpl config = new ExportConfigureImpl(xmlName, param, out);
 		String file = config.getFile();
 		Map<String, Object> parameters = config.getParameters();
 		ReportDefinition reportDefinition = reportRender.getReportDefinition(file);
-		return reportRender.render(reportDefinition, parameters);
+		return reportRender.render(reportDefinition, parameters,ReportType.excel);
 	}
 
 	public void createSheet(String xmlName, SXSSFWorkbook wb, String sheetName, Map param){
-		Report report = getReport(xmlName, param ,new ByteArrayOutputStream());
+		Report report = getSheetReport(xmlName, param ,new ByteArrayOutputStream());
 		ExcelBuilderDirect excelBuilderDirect= new ExcelBuilderDirect();
 		excelBuilderDirect.build(report, wb, sheetName);
 	}

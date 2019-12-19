@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.sbybfai.ureport.definition.*;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -35,12 +36,6 @@ import org.sbybfai.ureport.build.cell.right.RightExpandBuilder;
 import org.sbybfai.ureport.build.paging.BasePagination;
 import org.sbybfai.ureport.build.paging.Page;
 import org.sbybfai.ureport.build.paging.PagingBuilder;
-import org.sbybfai.ureport.definition.Band;
-import org.sbybfai.ureport.definition.Expand;
-import org.sbybfai.ureport.definition.Orientation;
-import org.sbybfai.ureport.definition.PagingMode;
-import org.sbybfai.ureport.definition.Paper;
-import org.sbybfai.ureport.definition.ReportDefinition;
 import org.sbybfai.ureport.definition.datasource.BuildinDatasource;
 import org.sbybfai.ureport.definition.datasource.BuildinDatasourceDefinition;
 import org.sbybfai.ureport.definition.datasource.DatasourceDefinition;
@@ -70,14 +65,15 @@ public class ReportBuilder extends BasePagination implements ApplicationContextA
 		cellBuildersMap.put(Expand.Down,new DownExpandBuilder());
 		cellBuildersMap.put(Expand.None,noneExpandBuilder);
 	}
-	public Report buildReport(ReportDefinition reportDefinition,Map<String,Object> parameters) {
+	public Report buildReport(ReportDefinition reportDefinition, Map<String,Object> parameters, ReportType reportType) {
 		Report report = reportDefinition.newReport();
+		report.setReportType(reportType);
 		Map<String,Dataset> datasetMap=buildDatasets(reportDefinition, parameters, applicationContext);
 		Context context = new Context(this,report,datasetMap,applicationContext,parameters,hideRowColumnBuilder);
 		long start=System.currentTimeMillis();
 		List<Cell> cells=new ArrayList<Cell>();
 		cells.add(report.getRootCell());
-		do {			
+		do {
 			buildCell(context,cells);
 			cells = context.nextUnprocessedCells();
 		} while (cells != null);

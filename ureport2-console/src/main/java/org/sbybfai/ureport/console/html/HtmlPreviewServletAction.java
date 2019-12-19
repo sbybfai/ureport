@@ -44,6 +44,7 @@ import org.sbybfai.ureport.console.cache.TempObjectCache;
 import org.sbybfai.ureport.console.exception.ReportDesignException;
 import org.sbybfai.ureport.definition.Paper;
 import org.sbybfai.ureport.definition.ReportDefinition;
+import org.sbybfai.ureport.definition.ReportType;
 import org.sbybfai.ureport.definition.searchform.FormPosition;
 import org.sbybfai.ureport.exception.ReportComputeException;
 import org.sbybfai.ureport.export.ExportManager;
@@ -206,7 +207,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 		}else{
 			reportDefinition=reportRender.getReportDefinition(file);
 		}
-		Report report=reportBuilder.buildReport(reportDefinition, parameters);	
+		Report report=reportBuilder.buildReport(reportDefinition, parameters, ReportType.html);
 		Map<String, ChartData> chartMap=report.getContext().getChartDataMap();
 		if(chartMap.size()>0){
 			CacheUtils.storeChartDataMap(chartMap);				
@@ -277,7 +278,7 @@ public class HtmlPreviewServletAction extends RenderPageServletAction {
 			if(reportDefinition==null){
 				throw new ReportDesignException("Report data has expired,can not do preview.");
 			}
-			Report report=reportBuilder.buildReport(reportDefinition, parameters);
+			Report report=reportBuilder.buildReport(reportDefinition, parameters, ReportType.html);
 			Map<String, ChartData> chartMap=report.getContext().getChartDataMap();
 			if(chartMap.size()>0){
 				CacheUtils.storeChartDataMap(chartMap);				

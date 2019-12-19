@@ -36,17 +36,7 @@ import org.sbybfai.ureport.Range;
 import org.sbybfai.ureport.Utils;
 import org.sbybfai.ureport.build.BindData;
 import org.sbybfai.ureport.build.Context;
-import org.sbybfai.ureport.definition.Alignment;
-import org.sbybfai.ureport.definition.BlankCellInfo;
-import org.sbybfai.ureport.definition.Border;
-import org.sbybfai.ureport.definition.CellStyle;
-import org.sbybfai.ureport.definition.ConditionCellStyle;
-import org.sbybfai.ureport.definition.ConditionPaging;
-import org.sbybfai.ureport.definition.ConditionPropertyItem;
-import org.sbybfai.ureport.definition.Expand;
-import org.sbybfai.ureport.definition.LinkParameter;
-import org.sbybfai.ureport.definition.PagingPosition;
-import org.sbybfai.ureport.definition.Scope;
+import org.sbybfai.ureport.definition.*;
 import org.sbybfai.ureport.definition.value.SimpleValue;
 import org.sbybfai.ureport.definition.value.Value;
 import org.sbybfai.ureport.exception.ReportComputeException;
@@ -567,6 +557,10 @@ public class Cell implements ReportCell {
 	public void doDataWrapCompute(Context context){
 		Boolean wrapCompute=cellStyle.getWrapCompute();
 		if(wrapCompute==null || !wrapCompute){
+			return;
+		}
+		Report report = context.getReport();
+		if(report.getReportType() == ReportType.html){
 			return;
 		}
 		Object targetData=getFormatData();

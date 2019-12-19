@@ -30,6 +30,7 @@ import org.sbybfai.ureport.console.BaseServletAction;
 import org.sbybfai.ureport.console.cache.TempObjectCache;
 import org.sbybfai.ureport.console.exception.ReportDesignException;
 import org.sbybfai.ureport.definition.ReportDefinition;
+import org.sbybfai.ureport.definition.ReportType;
 import org.sbybfai.ureport.exception.ReportComputeException;
 import org.sbybfai.ureport.exception.ReportException;
 import org.sbybfai.ureport.export.ExportConfigure;
@@ -76,7 +77,7 @@ public class ExportWordServletAction extends BaseServletAction {
 				if(reportDefinition==null){
 					throw new ReportDesignException("Report data has expired,can not do export word.");
 				}
-				Report report=reportBuilder.buildReport(reportDefinition, parameters);	
+				Report report=reportBuilder.buildReport(reportDefinition, parameters, ReportType.word);
 				wordProducer.produce(report, outputStream);
 			}else{
 				ExportConfigure configure=new ExportConfigureImpl(file,parameters,outputStream);
