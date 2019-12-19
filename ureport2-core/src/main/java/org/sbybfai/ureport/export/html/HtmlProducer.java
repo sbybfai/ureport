@@ -232,12 +232,6 @@ public class HtmlProducer{
 				}else{
 					String text=obj.toString();
 					text=StringEscapeUtils.escapeHtml4(text);
-					text=text.replaceAll("\r\n", "<br>");
-					text=text.replaceAll("\n", "<br>");
-					text=text.replaceAll(" ", "&nbsp;");
-					if(text.equals("")){
-						text="&nbsp;";
-					}
 					CellStyle cellStyle =  cell.getCellStyle();
 					String formType = cellStyle.getFormType();
 					if(formType != null){
@@ -251,7 +245,6 @@ public class HtmlProducer{
 						for(int index = i + 1; index < i + rowSpan; index++){
 							formHeight += rows.get(index).getRealHeight();
 						}
-
 						element = element.replace("${val}", text).replace("${height}", String.valueOf(formHeight));
 						String formName = cell.getCellStyle().getFormName();
 						formName = Utils.doReplaceCellValue(context, cell, formName);
@@ -261,6 +254,7 @@ public class HtmlProducer{
 						element = element.replace("${padding}", htmlPaddingValue);
 						sb.append(element);
 					} else{
+						text = handleBlank(text);
 						text = "<span style='padding:${padding};'> ${text} </span>".replace("${text}", text);
 						text = text.replace("${padding}", htmlPaddingValue);
 						sb.append(text);
@@ -276,7 +270,17 @@ public class HtmlProducer{
 		sb.append("</table>");
 		return sb;
 	}
-	
+
+	private String handleBlank(String text) {
+		text=text.replaceAll("\r\n", "<br>");
+		text=text.replaceAll("\n", "<br>");
+		text=text.replaceAll(" ", "&nbsp;");
+		if(text.equals("")){
+			text="&nbsp;";
+		}
+		return text;
+	}
+
 	private int buildWidth(List<Column> columns,int colIndex,int colSpan){
 		int width=0;
 		int start=colIndex,end=colIndex+colSpan;
