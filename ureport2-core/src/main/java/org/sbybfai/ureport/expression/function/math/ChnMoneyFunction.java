@@ -45,7 +45,7 @@ public class ChnMoneyFunction extends MathFunction {
 	}
 	
 	public static void main(String[] args) {
-		BigDecimal numberData=new BigDecimal(2031002101.35);
+		BigDecimal numberData=new BigDecimal(2031002120.25);
 		String chn=numberToRMB(numberData);
 		System.out.println(chn);
 	}
@@ -90,6 +90,9 @@ public class ChnMoneyFunction extends MathFunction {
 		        zeroSize = 0;
 		    } else {
 		        ++zeroSize;
+		        if (!(getZero) && numIndex != 2) {
+					sb.insert(0, CN_UPPER_NUMBER[numUnit]);
+				}
 
 		        if (numIndex == 2) {
 		            if (number > 0) {
@@ -97,9 +100,7 @@ public class ChnMoneyFunction extends MathFunction {
 		            }
 		        } else if (((numIndex - 2) % 4 == 0) && (number % 1000 > 0)) {
 		            sb.insert(0, CN_UPPER_UNIT[numIndex]);
-		        } else if (!(getZero)) {
-					sb.insert(0, CN_UPPER_NUMBER[numUnit]);
-				}
+		        }
 		        getZero = true;
 		    }
 		    number = number / 10;
