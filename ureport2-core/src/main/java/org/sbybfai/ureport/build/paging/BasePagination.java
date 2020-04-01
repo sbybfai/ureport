@@ -31,25 +31,28 @@ import org.sbybfai.ureport.model.Row;
  */
 public abstract class BasePagination {
 	protected void buildSummaryRows(List<Row> summaryRows,List<Page> pages){
-		Page lastPage=pages.get(pages.size()-1);
-		List<Row> lastPageRows=lastPage.getRows();
+		Page lastPage = pages.get(pages.size()-1);
+		List<Row> lastPageRows = lastPage.getRows();
 		for(Row row:summaryRows){
-			row.setPageIndex(pages.size());
-			lastPageRows.add(row);
+			insertSummaryRow(lastPageRows, row);
 		}
 
-		//修复总结行和重复表尾同时存在时，总结行必放到重复表尾后面的bug，重新排序，使其按定义的顺序渲染
-		Collections.sort(lastPageRows, new Comparator<Row>() {
-			@Override
-			public int compare(Row o1, Row o2) {
-				String rowKey1 = o1.getRowKey();
-				String rowKey2 = o2.getRowKey();
-				Integer rowKeyNum1 = Integer.valueOf(rowKey1.substring(1));
-				Integer rowKeyNum2 = Integer.valueOf(rowKey2.substring(1));
-				return rowKeyNum1.compareTo(rowKeyNum2);
-			}
-		});
 	}
+
+	//修复总结行和重复表尾同时存在时，总结行必放到重复表尾后面的bug。根据rowKey的大小排序，找到合适位置插入
+	private void insertSummaryRow(List<Row> lastPageRows, Row summaryRow){
+		String rowKey1 = summaryRow.getRowKey();
+		int rowKeyNum1 = Integer.parseInt(rowKey1.substring(1));
+		for(int i=0; i<lastPageRows.size(); i++){
+			String rowKey2 = lastPageRows.get(i).getRowKey();
+			int rowKeyNum2 = Integer.parseInt(rowKey2.substring(1));
+			if(rowKeyNum2 > rowKeyNum1){
+				lastPageRows.add(i, summaryRow);
+				return;
+			}
+		}
+	}
+
 	protected Page buildPage(List<Row> rows,List<Row> headerRows,List<Row> footerRows,List<Row> titleRows,int pageIndex,Report report){
 		int rowSize=rows.size();
 		Row lastRow=rows.get(rowSize-1);

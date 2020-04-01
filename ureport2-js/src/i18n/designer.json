@@ -268,6 +268,7 @@
     "open":{
       "title":"打开报表文件",
       "source":"报表来源：",
+      "searchKey": "文件搜索：",
       "fileName":"文件名",
       "modDate":"修改日期",
       "open":"打开",

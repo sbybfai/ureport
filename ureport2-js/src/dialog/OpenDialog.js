@@ -29,79 +29,105 @@ export default class OpenDialog{
     }
     initBody(body){
         const providerGroup=$(`<div class="form-group"><label>${window.i18n.dialog.open.source}</label></div>`);
-        this.providerSelect=$(`<select class="form-control" style="display: inline-block;width:450px;">`);
+        this.providerSelect=$(`<select class="form-control" style="display: inline-block;width:350px;">`);
         providerGroup.append(this.providerSelect);
         body.append(providerGroup);
-        const tableContainer=$(`<div style="height:350px;overflow: auto"></div>`);
+
+        const SearchGroup=$(`<div class="form-group"><label>${window.i18n.dialog.open.searchKey}</label></div>`);
+        this.nameSearchInput=$(`<input class="form-control" style="display: inline-block;width:350px;">`);
+        SearchGroup.append(this.nameSearchInput);
+        body.append(SearchGroup);
+
+        const tableContainer=$(`<div style="height:500px;overflow: auto"></div>`);
         body.append(tableContainer);
+
         const fileTable=$(`<table class="table table-bordered"><thead><tr style="background: #f4f4f4;height: 30px;">
             <td style="vertical-align: middle">${window.i18n.dialog.open.fileName}</td>
             <td style="width: 150px;vertical-align: middle">${window.i18n.dialog.open.modDate}</td>
             <td style="width:50px;vertical-align: middle">${window.i18n.dialog.open.open}</td>
             <td style="width:50px;vertical-align: middle">${window.i18n.dialog.open.del}</td></tr></thead></table>`);
+
         this.fileTableBody=$(`<tbody></tbody>`);
         fileTable.append(this.fileTableBody);
         tableContainer.append(fileTable);
         const _this=this;
+
         this.providerSelect.change(function(){
             let value=$(this).val();
             if(!value || value===''){
                 return;
             }
-            _this.fileTableBody.empty();
-            let reportFiles=_this.reportFilesData[value];
-            if(!reportFiles){
-                return;
-            }
-            for(let file of reportFiles){
-                let tr=$(`<tr style="height: 35px;"></tr>`);
-                _this.fileTableBody.append(tr);
-                tr.append(`<td style="vertical-align: middle;">${file.name}</td>`);
-                tr.append(`<td style="vertical-align: middle;">${formatDate(file.updateDate)}</td>`);
-
-                let openCol=$(`<td style="vertical-align: middle;"></td>`);
-                tr.append(openCol);
-                let openIcon=$(`<a href="###"><i class="glyphicon glyphicon-folder-open" style="color: #008ed3;font-size: 14pt"></i></a>`);
-                openCol.append(openIcon);
-                openIcon.click(function(){
-                    confirm(`${window.i18n.dialog.open.openConfirm}[${file.name}]？`,function(){
-                        let fullFile=value+encodeURI(encodeURI(file.name));
-                        let path=window._server+"/designer?_u="+fullFile;
-                        window.open(path,"_self");
-                    });
-                });
-
-                let deleteCol=$(`<td style="vertical-align: middle;"></td>`);
-                tr.append(deleteCol);
-                let deleteIcon=$(`<a href="###"><i class="glyphicon glyphicon-trash" style="color: red;font-size: 14pt"></i></a>`);
-                deleteCol.append(deleteIcon);
-
-                deleteIcon.click(function(){
-                    confirm(`${window.i18n.dialog.open.delConfirm}`+file.name,function(){
-                        let fullFile=value+file.name;
-                        $.ajax({
-                            type:'POST',
-                            data:{file:fullFile},
-                            url:window._server+"/designer/deleteReportFile",
-                            success:function(){
-                                tr.remove();
-                                let index=reportFiles.indexOf(file);
-                                reportFiles.splice(index,1);
-                            },
-                            error:function(response){
-                                if(response && response.responseText){
-                                    alert("服务端错误："+response.responseText+"");
-                                }else{
-                                    alert(`${window.i18n.dialog.open.delFail}`);
-                                }
-                            }
-                        });
-                    });
-                });
-            }
+            _this.initRows(value, _this)
             _this.currentProviderPrefix=value;
-            _this.currentReportFiles=reportFiles;
         });
+
+        this.nameSearchInput.change(function(){
+            let value = _this.providerSelect.val();
+            _this.initRows(value, _this);
+            _this.currentProviderPrefix=value;
+        });
+
+    }
+    initRows(value, _this){
+        _this.fileTableBody.empty();
+        let reportFiles=_this.reportFilesData[value];
+        if(!reportFiles){
+            return;
+        }
+        for(let file of reportFiles){
+            let keyName = _this.nameSearchInput.val();
+            if(keyName !== undefined && keyName.length > 0){
+                if(file.name.indexOf(keyName) === -1){
+                    continue;
+                }
+            }
+
+            let tr=$(`<tr style="height: 35px;"></tr>`);
+            _this.fileTableBody.append(tr);
+            tr.append(`<td style="vertical-align: middle;">${file.name}</td>`);
+            tr.append(`<td style="vertical-align: middle;">${formatDate(file.updateDate)}</td>`);
+
+            let openCol=$(`<td style="vertical-align: middle;"></td>`);
+            tr.append(openCol);
+            let openIcon=$(`<a href="###"><i class="glyphicon glyphicon-folder-open" style="color: #008ed3;font-size: 14pt"></i></a>`);
+            openCol.append(openIcon);
+            openIcon.click(function(){
+                confirm(`${window.i18n.dialog.open.openConfirm}[${file.name}]？`,function(){
+                    let fullFile=value+encodeURI(encodeURI(file.name));
+                    let path=window._server+"/designer?_u="+fullFile;
+                    window.open(path,"_self");
+                });
+            });
+
+            let deleteCol=$(`<td style="vertical-align: middle;"></td>`);
+            tr.append(deleteCol);
+            let deleteIcon=$(`<a href="###"><i class="glyphicon glyphicon-trash" style="color: red;font-size: 14pt"></i></a>`);
+            deleteCol.append(deleteIcon);
+
+            deleteIcon.click(function(){
+                confirm(`${window.i18n.dialog.open.delConfirm}`+file.name,function(){
+                    let fullFile=value+file.name;
+                    $.ajax({
+                        type:'POST',
+                        data:{file:fullFile},
+                        url:window._server+"/designer/deleteReportFile",
+                        success:function(){
+                            tr.remove();
+                            let index=reportFiles.indexOf(file);
+                            reportFiles.splice(index,1);
+                        },
+                        error:function(response){
+                            if(response && response.responseText){
+                                alert("服务端错误："+response.responseText+"");
+                            }else{
+                                alert(`${window.i18n.dialog.open.delFail}`);
+                            }
+                        }
+                    });
+                });
+            });
+        }
+        _this.currentReportFiles=reportFiles;
     }
     show(){
         this.providerSelect.empty();
