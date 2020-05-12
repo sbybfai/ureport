@@ -43,14 +43,15 @@ public abstract class BasePagination {
 	private void insertSummaryRow(List<Row> lastPageRows, Row summaryRow){
 		String rowKey1 = summaryRow.getRowKey();
 		int rowKeyNum1 = Integer.parseInt(rowKey1.substring(1));
-		for(int i=0; i<lastPageRows.size(); i++){
+		int i = 0;
+		for(; i<lastPageRows.size(); i++){
 			String rowKey2 = lastPageRows.get(i).getRowKey();
 			int rowKeyNum2 = Integer.parseInt(rowKey2.substring(1));
 			if(rowKeyNum2 > rowKeyNum1){
-				lastPageRows.add(i, summaryRow);
-				return;
+				break;
 			}
 		}
+		lastPageRows.add(i, summaryRow);
 	}
 
 	protected Page buildPage(List<Row> rows,List<Row> headerRows,List<Row> footerRows,List<Row> titleRows,int pageIndex,Report report){
