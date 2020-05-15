@@ -265,7 +265,12 @@ public class Cell implements ReportCell {
 			Date d=(Date)data;
 			SimpleDateFormat sd=new SimpleDateFormat(format);
 			formatData=sd.format(d);
-		}else{
+		} else if(format.equals("##****##")){	//隐藏身份证中间4位
+			String identityNo = String.valueOf(data);
+			if(identityNo.length() == 18){
+				formatData=identityNo.substring(0, 10) + "****" + identityNo.substring(14, 18);
+			}
+		} else{
 			BigDecimal bd=null;
 			try{
 				bd=Utils.toBigDecimal(data);				

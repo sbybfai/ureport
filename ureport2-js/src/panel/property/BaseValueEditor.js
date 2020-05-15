@@ -124,7 +124,8 @@ export default class BaseValueEditor{
                 "￥##,###.##",
                 "$##,###.##",
                 "0.00E00",
-                "##0.0E0"
+                "##0.0E0",
+                "##****##"
             ],
             complete:function(){
                 let value=_this.formatEditor.val();
