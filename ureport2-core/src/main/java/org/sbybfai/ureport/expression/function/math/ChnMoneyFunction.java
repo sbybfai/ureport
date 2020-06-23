@@ -20,6 +20,7 @@ import java.util.List;
 
 import org.sbybfai.ureport.build.Context;
 import org.sbybfai.ureport.expression.model.data.ExpressionData;
+import org.sbybfai.ureport.expression.model.data.ObjectExpressionData;
 import org.sbybfai.ureport.model.Cell;
 
 /**
@@ -36,7 +37,15 @@ public class ChnMoneyFunction extends MathFunction {
 	@Override
 	public Object execute(List<ExpressionData<?>> dataList, Context context,Cell currentCell) {
 		BigDecimal data = buildBigDecimal(dataList);
-		return numberToRMB(data);
+		Boolean is6MustZero = false;
+		Boolean is2MustZero = false;
+		if (dataList.size() == 3) {
+			ObjectExpressionData args1 = (ObjectExpressionData) dataList.get(1);
+			ObjectExpressionData args2 = (ObjectExpressionData) dataList.get(2);
+			is6MustZero = (Boolean) args1.getData();
+			is2MustZero = (Boolean) args2.getData();
+		}
+		return numberToRMB(data, is6MustZero, is2MustZero);
 	}
 
 	@Override
@@ -46,11 +55,18 @@ public class ChnMoneyFunction extends MathFunction {
 	
 	public static void main(String[] args) {
 		BigDecimal numberData=new BigDecimal(2031002120.25);
-		String chn=numberToRMB(numberData);
+		String chn=numberToRMB(numberData, false, false);
 		System.out.println(chn);
 	}
-	
-	private static String numberToRMB(BigDecimal numberData){
+
+	/**
+	 *
+	 * @param numberData 需要转化的数字
+	 * @param is6MustZero 万位为0时，是否需要添加零
+	 * @param is2MustZero 元位为0时，是否需要添加零
+	 * @return
+	 */
+	private static String numberToRMB(BigDecimal numberData, Boolean is6MustZero, Boolean is2MustZero){
 		StringBuilder sb = new StringBuilder();
 		int signum = numberData.signum();
 		if (signum == 0) {
@@ -78,10 +94,10 @@ public class ChnMoneyFunction extends MathFunction {
 		    }
 		    numUnit = (int) (number % 10);
 		    if (numUnit > 0) {
-		        if ((numIndex == 9) && (zeroSize >= 3)) {
+		        if ((numIndex == 9) && (zeroSize >= 3)) {	//前面遇0太多，补万
 		            sb.insert(0, CN_UPPER_UNIT[6]);
 		        }
-		        if ((numIndex == 13) && (zeroSize >= 3)) {
+		        if ((numIndex == 13) && (zeroSize >= 3)) {	 //前面遇0太多，补亿
 		            sb.insert(0, CN_UPPER_UNIT[10]);
 		        }
 		        sb.insert(0, CN_UPPER_UNIT[numIndex]);
@@ -90,13 +106,13 @@ public class ChnMoneyFunction extends MathFunction {
 		        zeroSize = 0;
 		    } else {
 		        ++zeroSize;
-		        if (!(getZero) && numIndex != 2) {
-					sb.insert(0, CN_UPPER_NUMBER[numUnit]);
+		        if (!(getZero) && needPutZero(numIndex, is2MustZero, is6MustZero)) {
+		        	sb.insert(0, CN_UPPER_NUMBER[numUnit]); //填零
 				}
 
 		        if (numIndex == 2) {
 		            if (number > 0) {
-		                sb.insert(0, CN_UPPER_UNIT[numIndex]);
+		                sb.insert(0, CN_UPPER_UNIT[numIndex]); //补元
 		            }
 		        } else if (((numIndex - 2) % 4 == 0) && (number % 1000 > 0)) {
 		            sb.insert(0, CN_UPPER_UNIT[numIndex]);
@@ -114,4 +130,17 @@ public class ChnMoneyFunction extends MathFunction {
 		}
 		return sb.toString();
 	}
+
+	private static boolean needPutZero(int numIndex, boolean is2MustZero, boolean is6MustZero){
+		if(numIndex == 2 && !is2MustZero){	//如果是元位，且不要求为零
+			return false;
+		}
+		if(numIndex == 6 && !is6MustZero){ //如果是万位，且不要求为零
+			return false;
+		}
+		return true;
+
+	}
 }
+
+
