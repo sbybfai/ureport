@@ -913,7 +913,6 @@ public class Cell implements ReportCell {
 				}
 				try {
 					value=URLEncoder.encode(value, "utf-8");
-					value=URLEncoder.encode(value, "utf-8");
 				} catch (UnsupportedEncodingException e) {
 					throw new ReportComputeException(e);
 				}
