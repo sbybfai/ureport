@@ -203,9 +203,9 @@ public class ExcelBuilderDirect extends ExcelBuilder {
 								anchor.setRow1(rowNumber);
 								anchor.setRow2(rowNumber+rowSpan);
 								anchor.setDx1(leftMargin * EMU_PER_PIXEL);
-								anchor.setDx2((leftMargin+width) * XSSFShape.EMU_PER_PIXEL);
+								anchor.setDx2((leftMargin+width) * EMU_PER_PIXEL);
 								anchor.setDy1(topMargin * EMU_PER_PIXEL);
-								anchor.setDy2((topMargin+height) * XSSFShape.EMU_PER_PIXEL);
+								anchor.setDy2((topMargin+height) * EMU_PER_PIXEL);
 								drawing.createPicture(anchor, pictureIndex);
 							}finally{
 								IOUtils.closeQuietly(inputStream);
