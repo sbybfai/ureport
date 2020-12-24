@@ -145,5 +145,11 @@ export default class UReportDesigner{
         for(const tool of this.tools){
             toolbar.append(tool.buildButton());
         }
+        toolbar.css({
+            position: "fixed",
+            top: "0",
+            zIndex: 11
+        });
+        this.container.prepend('<div style="height: 40px"/>');
     }
 }
