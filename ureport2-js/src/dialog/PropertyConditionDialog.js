@@ -859,6 +859,10 @@ export default class PropertyConditionDialog{
             zIndex:1301
         });
 
+        this.formatEditor.on('input', function () {
+            $(this).data('completer').place();
+        });
+
         const rowHeightGroupContainer=$(`<div class="form-group" style="margin-bottom: 5px;"></div>`);
         container.append(rowHeightGroupContainer);
         this.rowHeightCheckbox=$(`<label><input type="checkbox">${window.i18n.dialog.propCondition.rowHeight}</label>`);

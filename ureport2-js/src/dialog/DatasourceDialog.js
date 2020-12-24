@@ -67,6 +67,10 @@ export default class DatasourceDialog{
             zIndex:200000
         });
 
+        this.driverEditor.on('input', function () {
+            $(this).data('completer').place();
+        });
+
         const urlRow=$(`<div class="row" style="margin-bottom: 10px;margin-right:6px;"><div class="col-md-2" style="padding: 0 10px 0 0px;text-align:right;margin-top:5px">${window.i18n.dialog.datasource.url}</div></div>`);
         const urlGroup=$(`<div class="col-md-10" style="padding: 0 10px 0 0px"></div>`);
         this.urlEditor=$(`<input type="text" class="form-control" style="font-size: 13px">`);
@@ -82,6 +86,10 @@ export default class DatasourceDialog{
             ],
             suggest: true,
             zIndex:200000
+        });
+
+        this.urlEditor.on('input', function () {
+            $(this).data('completer').place();
         });
 
         const _this=this;

@@ -139,6 +139,9 @@ export default class BaseValueEditor{
         }else{
             this.container.append(this.formatGroup);
         }
+        this.formatEditor.on('input', function () {
+            $(this).data('completer').place();
+        });
         this.formatEditor.change(function(){
             _this._setFormat($(this).val());
         });
