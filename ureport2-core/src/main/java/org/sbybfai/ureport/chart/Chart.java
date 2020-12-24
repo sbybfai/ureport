@@ -72,6 +72,7 @@ public class Chart {
 			sb.append("}");
 		}else {
 			withoption=true;
+			sb.append(",");
 			sb.append("\"plugins\": {");
 			sb.append("\"datalabels\":{\"display\":false}");
 			sb.append("}");
