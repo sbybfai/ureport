@@ -603,8 +603,11 @@ public class Cell implements ReportCell {
 		StringBuilder multipleLine=new StringBuilder();
 		StringBuilder sb=new StringBuilder();
 		int length=dataText.length();
+
+
 		for(int i=0;i<length;i++){
 			char text=dataText.charAt(i);
+			boolean newLineFlag = false;
 			if(text=='\r' || text=='\n'){
 				if(text=='\r'){
 					int nextIndex=i+1;
@@ -615,20 +618,22 @@ public class Cell implements ReportCell {
 						}
 					}
 				}
-				continue;
+				newLineFlag = true;
 			}
 			sb.append(text);
-			
+
 			int width=fontMetrics.stringWidth(sb.toString())+4;
-			if(width>totalColumnWidth){
+			if(newLineFlag || width>totalColumnWidth){
 				sb.deleteCharAt(sb.length()-1);
-				totalLineHeight+=singleLineHeight;										
+				totalLineHeight+=singleLineHeight;
 				if(multipleLine.length()>0){
 					multipleLine.append('\n');
 				}
 				multipleLine.append(sb);
 				sb.delete(0, sb.length());
-				sb.append(text);
+				if(text != '\r' && text != '\n'){
+					sb.append(text);
+				}
 			}
 		}
 		if(sb.length()>0){
@@ -656,9 +661,9 @@ public class Cell implements ReportCell {
 			}
 		}
 	}
-	
-	
-	
+
+
+
 	public static void main(String[] args) {
 		FontMetrics fontMetrics=new JLabel().getFontMetrics(new Font("宋体",Font.PLAIN,12));
 		String text="我是中国人，我来自China,好吧！top和bottom文档描述地很模糊，其实这里我们可以借鉴一下TextView对文本的绘制，"
