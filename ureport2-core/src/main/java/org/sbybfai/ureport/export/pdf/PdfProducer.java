@@ -318,12 +318,16 @@ public class PdfProducer implements Producer {
 				cell=new PdfPCell(buildPdfImage(img.getBase64Data(), 0, 0));
 			}else{
 				cell=new PdfPCell();
+				cell.setUseAscender(true);
+				cell.setUseDescender(true);
 				CellPhrase pargraph=new CellPhrase(cellInfo,"");
 				cell.setPhrase(pargraph);
 				cell.setFixedHeight(cellHeight);
 			}
 		}else{
 			cell=new PdfPCell();
+			cell.setUseAscender(true);
+			cell.setUseDescender(true);
 			CellPhrase pargraph=new CellPhrase(cellInfo,cellData);
 			cell.setPhrase(pargraph);
 			cell.setFixedHeight(cellHeight);
